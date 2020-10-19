@@ -1,0 +1,104 @@
+1. Cryptographic Random Numbers
+2. Hashing Algorithms
+3. Secure Password Storage
+4. Symmetric Encryption
+5. Asymmetric Encryption
+6. Hybrid Encryption
+8. Digital Signatures
+9. Secure String in c#
+
+1.  Cryptographic Random Numbers:
+    - Good random numbers are important in cryptography.
+    - Random numbers used for creating encryption keys and for hashing.
+    - System.Random is not good for non-deterministic random numbers.
+    - RNGCryptoServiceProvider is a more secure way to generate random numbers.
+
+    - System.Random is a pseudo random number generator.
+    - A seed value is passed into the constructor.
+    - The seed value should be different each time.
+    - System.Random is deterministic and predictable.
+    - it is not thread safe.
+
+    - RNGCryptoServiceProvider is good for random number generation.
+    - RNGCryptoServiceProvider is slower to execute than System.Random
+
+2. Hashing
+    * what is Hashing
+        - This is one way function
+        - Main features for a good hashing Algorithm
+            - It is easy to compute the hash value for any given Message
+            - It is infeasible to generate a message that has a given hash
+            - It is infeasible to modify a message without changing the hash
+            - It is infeasible to find two different messages with the same hash
+    * MD5
+        - Designed by Ron Rivest in 1991 to replace MD4
+        - Produces a 128 bit (16 byte) hash value
+        - Commonly used to verify file integrity
+        - First collision resistance flaw found in 1996
+        - Recommendation was to move over to the Secure Hash Family
+        - Further collision resistance problems found in 2004
+        - Still needed when integrating with legacy Systems
+    * Secure Hash (SHA) Family
+        - SHA-1 SHA-256 SHA-512
+    * Hashed Message Authentication Codes (HMAC)
+        - It will check the signature for hashing.
+
+    * Password Based Key Derivation Functions (PBKDF2)
+        - Good default is 50,000 iterations
+        - Balance number of iterations with acceptable performance
+        - ideally double number of iterations every 2 years
+
+3. Secure Password Storage
+    - using hashing ,salts, PBKDF2
+
+4. Symmetric Encryption:
+    - DES, Triple DES, AES
+    - Two way function
+    - DES ( Data Encryption Standard ) - Not recommended to use
+        - Data Encryption Standard (DES) was developed in early 1970's at IBM
+        - Submitted to National Bureau of Standards for approval
+        - Approved at Federal Information Processing Standard 46 (FIPS 46)
+        - Consultation with the National Security Agency (NSA)
+        - Provide Security for the unclassified electronic data for the US government
+    - AES ( Advanced Encryption Standard )
+        - AES adopted by NIST in 2001
+        - Selected by a contest to replace the Data Encryption Standard (DES)
+        - AES is based on the Rijndael cipher
+        - Unlike DES, AES does not use a Feistel network
+        - Uses 128 bit block size and 128, 192 or 256 bit keys
+        - Based on a design known as a substitution - permutation network
+            - S-Box performs substitutions
+            - P-Box performs bit shuffling to transpose bits across S-BOX inputs
+        - 10 rounds of repetition for 128-bit keys
+        - 12 rounds of repetition for 192-bit keys
+        - 14 rounds of repetition for 256-bit keys
+    - How Secure is AES against brute force attack
+        key-size     Time to crack
+          56 bit       399 seconds
+          128 bit      1.02 x 10^18 years
+          192 bit      1.87 x 10^37 years
+          256 bit      3.31 x 10^56 years
+
+    - Symmetric Algorithm
+        - CipherMode Mode
+            - Cipher block chaining (CBC) -- default one
+            - Cipher feedback (CFB)
+            - Ciphertext stealing (CTS)
+            - Electronic codebook (ECB)
+            - Output feedback (OFB)
+        - PaddingMode padding
+            - ANSI x923
+            - ISO 10126
+            - None
+            - PKCS7 -- default one
+            - Zeros
+        - byte[] key
+            - Byte array to store encryption key
+            - Generate secure keys
+                - RNGCryptoServiceProvider or
+                - GenerateKey()
+        - byte[] IV
+            - Initialization Vector is a byte array
+            - Also called nonce or number once
+            - IV prevents repetition in encryption
+            - IV does not have to be kept secret
